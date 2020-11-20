@@ -40,6 +40,6 @@ module.exports = (req, res) => {
   }
   //No estoy seguro de esto, en node se define los headers así,
   //pero dicen que con res.json ya automáticamente settean el header a 'Content-Type','application/json';
-  res.setHeader('Content-Type','application/json');
+  //res.setHeader('Content-Type','application/json');
   res.status(200).json(obj);
 };
