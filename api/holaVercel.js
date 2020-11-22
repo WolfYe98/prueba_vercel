@@ -1,8 +1,8 @@
 var data = require('./datos.js')
 module.exports = (req, res) => {
   var obj = {};
+  var keys = Object.keys(data);
   if(req.query.city == undefined){
-    var keys = Object.keys(data);
     var indexKey = 0;
     Object.entries(data).forEach(([key, value]) => {
       var medium = 0;
@@ -36,10 +36,34 @@ module.exports = (req, res) => {
     });
   }
   else{
-
+    var nombre_ciudad=(req.query.city).toString();
+    nombre_ciudad = nombre_ciudad.toLowerCase();
+    var cadena = nombre_ciudad.split(' ');
+    var i = 0;
+    cadena.forEach((ele,index,a)=>{
+      ele = ele.charAt(0).toUpperCase()+ele.substring(1,ele.length);
+      if(i == 0){
+        nombre_ciudad=ele;
+        i++;
+      }
+      else{
+        nombre_ciudad+=ele;
+      }
+    });
+    if(keys.includes(nombre_ciudad)){
+      var dato_ciudad = data[nombre_ciudad];
+      obj[nombre_ciudad] = dato_ciudad;
+    }
+    else{
+        obj={includedCities:keys};
+    }
   }
-  //No estoy seguro de esto, en node se define los headers así,
-  //pero dicen que con res.json ya automáticamente settean el header a 'Content-Type','application/json';
-  res.setHeader('Content-Type','application/json');
-  res.status(200).json(obj);
+  var hola ='';
+  if(process.env.SEBY === 'wolfye98'){
+    hola='hola';
+  }
+  console.log(process.env.API_URI);
+  //res.setHeader('Content-Type','application/json'); Esta línea no tienes porque ponerlo ya que res.json ya
+  // settea el header automáticamente a: 'Content-Type','application/json'
+  res.status(200).json({hola:hola,api:process.env.API_URI});
 };
