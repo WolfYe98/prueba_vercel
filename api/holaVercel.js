@@ -65,5 +65,5 @@ module.exports = (req, res) => {
   console.log(process.env.API_URI);
   //res.setHeader('Content-Type','application/json'); Esta línea no tienes porque ponerlo ya que res.json ya
   // settea el header automáticamente a: 'Content-Type','application/json'
-  res.status(200).json({hola:hola,api:process.env.API_URI});
+  res.status(200).json({hola:hola,api:process.env.API_URI,key:process.env.KEY});
 };
